@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Task</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    
+</head>
+<body>
+    
+    <ul>
+        <li ><a class="active" href="#auccont"><img class="profile" src="https://cdn-icons-png.flaticon.com/512/21/21104.png" >{{user}}</a></li>
+        <li><a href="#daily">Daily</a></li>
+        <li><a href="#calendar">Calendar</a></li>
+    </ul>
+<div class="main" >
+<h1>Task-Project</h1>
+
+
+<!--first box -->
+<div class="all-box">
+
+<div class="box">
+<div class="top-box">
+    <p>Monday</p>
+    
+</div>
+<div class="input-type">
+<select class="select-button">
+    <option value="School">School</option>
+    <option value="GYM">GYM</option>
+    <option value="other"></option>
+</select>
+</div>
+</div>
+
+<div class="box">
+    <div class="top-box">
+        <p>Monday</p>
+    </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
