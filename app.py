@@ -30,6 +30,22 @@ def login():
 
     return render_template('login.html')
 
-  
+@app.route('/register/', methods=('GET',))
+def register():
+    if request.method == 'post':
+        user = request.form['usernm']
+        password = request.form['password']
+    
+        if not user:
+            flash('Username required!')
+        elif not password:
+            flash('Password reqired')
+        else:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO DETAILS (usernm, password) VALUES (?)', [user],[password])
+            conn.commit()
+            conn.close
+            return render_template('index.html')
+    return render_template('register.html')
 if __name__ == '__main__': 
     app.run(debug=False) 
