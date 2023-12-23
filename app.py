@@ -34,15 +34,15 @@ def login():
 def register():
     if request.method == 'post':
         user = request.form['usernm']
-        password = request.form['password']
+        password1 = request.form['password']
     
         if not user:
             flash('Username required!')
-        elif not password:
+        elif not password1:
             flash('Password reqired')
         else:
             conn = get_db_connection()
-            conn.execute('INSERT INTO DETAILS (usernm, password) VALUES (?)', [user],[password])
+            conn.execute('INSERT INTO DETAILS (usernm, password) VALUES (?,?)', [user],[password1])
             conn.commit()
             conn.close
             return render_template('index.html')
