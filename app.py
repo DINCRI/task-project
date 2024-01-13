@@ -1,38 +1,18 @@
 import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect, abort  
+from flask import Flask, render_template, request, url_for, flash, redirect, abort ,session
+from flask_login import LoginManager
+login_manager = LoginManager()
+
 app = Flask(__name__) 
+app.secret_key = "super secret key"
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-
-@app.route('/login/', methods=('GET', 'POST'))
-def login():
-    if request.method == 'POST':
-        nm = request.form['name']
-        
-        if not nm:
-            flash('Name is required!')
-        else:
-            conn = get_db_connection()
-            conn.execute('INSERT INTO USER (name) VALUES (?)',[nm])
-            conn.commit()
-            conn.close()
-            return render_template('index.html')
-
-    return render_template('login.html')
-
-@app.route('/register/', methods=('GET',))
+@app.route('/register/', methods=('GET','POST'))
 def register():
-    if request.method == 'post':
+    if request.method == 'POST':
         user = request.form['usernm']
         password1 = request.form['password']
     
@@ -42,10 +22,55 @@ def register():
             flash('Password reqired')
         else:
             conn = get_db_connection()
-            conn.execute('INSERT INTO DETAILS (usernm, password) VALUES (?,?)', [user],[password1])
+            conn.execute('INSERT INTO DETAILS (usernm, password) VALUES (?,?)', [user,password1])
             conn.commit()
             conn.close
-            return render_template('index.html')
+            return redirect(url_for('index'))
     return render_template('register.html')
+
+
+@app.route('/login/', methods=('GET','POST'))
+def login():
+    if request.method == 'POST':
+        user = request.form['usernm']
+        password = request.form['password']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        
+        cursor.execute('SELECT * FROM DETAILS WHERE usernm = ? AND password = ?', (user, password))
+        user_data = cursor.fetchone()
+
+        if user_data:
+            
+            session['user_id'] = user_data['id']
+            session['usernm'] = user_data['usernm']
+            conn.close()
+            return redirect(url_for('index'))
+        else:
+           
+            flash('Invalid username or password')
+
+    return render_template('login.html')
+
+@app.route('/')
+def index():
+    
+    if 'user_id' in session and 'usernm' in session:
+        user_id = session['user_id']
+        username = session['usernm']
+        return render_template('index.html', username=username)
+    else:
+    
+        return redirect(url_for('login'))
+    
+@app.route('/logout/')
+def logout():
+    
+    session.clear()
+    flash('You have been logged out.')
+    return redirect(url_for('login'))
+
 if __name__ == '__main__': 
     app.run(debug=False) 
