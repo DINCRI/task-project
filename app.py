@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect, abort ,session
-from flask_login import LoginManager
-login_manager = LoginManager()
+
+
 
 app = Flask(__name__) 
 app.secret_key = "super secret key"

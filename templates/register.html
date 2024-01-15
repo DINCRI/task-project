@@ -6,19 +6,34 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Register</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main2.css') }}">
 </head>
 
 {% block content %}
 <body>
-    <form class="formregister" action = "{{ url_for('register') }}" method = "POST">
-        <label>Enter Username:</label> 
-        <input type="name" name="usernm" placeholder="Enter your name" required value="{{ request.form['usernm'] }}"><br/> 
-        <label>Enter Password:</label> 
-        <input type="name" name="password" placeholder="Enter your password" required value="{{ request.form['password'] }}"><br/> 
-        <input type = "submit" value = "submit"/><br/> 
-     </form>   
-</body>
+    <div class="wrap">
+        <form class="login-form" action = "{{ url_for('register') }}" method = "POST">
+            <div class="form-header">
+                <h3>Sign up Form</h3>
+                <p>Sign up to access the page</p>
+            </div>
+            <!--Email Input-->
+            <div class="form-group">
+                <input type="name" name="usernm" class="form-input" placeholder="Enter your name"  required value="{{ request.form['usernm'] }}">
+            </div>
+            <!--Password Input-->
+            <div class="form-group">
+                <input type="password" name="password" class="form-input" placeholder="Enter your password"  required value="{{ request.form['password'] }}">
+            </div>
+            <!--Login Button-->
+            <div class="form-group">
+                <button class="form-button" type="submit" value="submit">Login</button>
+            </div>
+            <div class="form-footer">
+                 <a href="{{ url_for('login') }}">Login</a>
+                </div>
+        </form>
+    </div>
 {% endblock %}
 
 </html>
