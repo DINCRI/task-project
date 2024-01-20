@@ -30,11 +30,8 @@
     
 </div>
 <div class="input-type">
-<select class="select-button">
-    <option value="School">School</option>
-    <option value="GYM">GYM</option>
-    <option value="other"></option>
-</select>
+    
+    <button id="myButton">+</button>
 </div>
 </div>
 
@@ -45,5 +42,39 @@
     </div>
 </div>
 </div>
+<div id="myPopup" class="popup">
+    <div class="popup-content">
+        <h1 style="color:rgb(217, 75, 10);">
+              Select your daily routine:
+          </h1>
+          <br>
+          <div class="select">
+            <select>
+              <option value="1">GYM</option>
+              <option value="2">SCHOOL</option>
+              <option value="3">JOB</option>
+              <option value="4">Hatz</option>
+            </select>
+          </div>
+          <br>
+        <button id="closePopup">
+              Close
+          </button>
+    </div>
+</div>
+
+<script>
+    myButton.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+</script>
 </body>
 </html>

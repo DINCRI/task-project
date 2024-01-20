@@ -17,13 +17,13 @@
                 <h3>Login Form</h3>
                 <p>Login to access the page</p>
             </div>
-            <!--Email Input-->
+            <!--Username Input-->
             <div class="form-group">
-                <input type="name" name="usernm" class="form-input" placeholder="name"  required value="{{ request.form['usernm'] }}">
+                <input type="name" name="usernm" class="form-input" placeholder="Enter your username"  required value="{{ request.form['usernm'] }}">
             </div>
             <!--Password Input-->
             <div class="form-group">
-                <input type="password" name="password" class="form-input" placeholder="password"  required value="{{ request.form['password'] }}">
+                <input type="password" name="password" class="form-input" placeholder="Enter your password"  required value="{{ request.form['password'] }}">
             </div>
             <!--Login Button-->
             <div class="form-group">
@@ -33,6 +33,13 @@
             Don't have an account? <a href="{{ url_for('register') }}">Sign Up</a>
             </div>
         </form>
+        {% with messages = get_flashed_messages()%}
+        {% if massages%}
+            {% for massage in massages%}
+            <p>{{massage}}</p>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
     </div><!--/.wrap-->
 </body>
 {% endblock %}
