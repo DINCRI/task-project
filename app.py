@@ -38,7 +38,6 @@ def login():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        
         cursor.execute('SELECT * FROM DETAILS WHERE usernm = ? AND password = ?', (user, password))
         user_data = cursor.fetchone()
 
