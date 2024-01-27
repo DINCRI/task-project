@@ -6,23 +6,23 @@
     <title>Task</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-    
+
 </head>
 <body>
-    <ul>
+<h1>Hi, {{username}}</h1>
+
+    <ul class="topnav">
         
 
         <li ><a href="{{ url_for('logout') }}" class="active" >logout</a></li>
         
         <li><a href="#calendar">Calendar</a></li>
+        <li class="right"><a href="#about">About</a></li>
     </ul>
-    <li><a href="#calendar">Calendar</a></li>
+    
 <div class="main" >
 
-<h2>Hi,{{username}}</h2>
 
-<!--first box -->
-<div class="all-box">
 
 <div class="box">
 <div class="top-box">
@@ -34,14 +34,73 @@
     <button id="myButton">+</button>
 </div>
 </div>
-
+<!-- /////////// -->
 <div class="box">
     <div class="top-box">
-        <p>x2</p>
+        <p>Tuesday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
     </div>
     </div>
-</div>
-</div>
+<!-- ////////// -->
+<div class="box">
+    <div class="top-box">
+        <p>Wednesday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
+    </div>
+    </div>
+<!-- /////////// -->
+<div class="box">
+    <div class="top-box">
+        <p>Thursday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
+    </div>
+    </div>
+<!-- //////////// -->
+<div class="box">
+    <div class="top-box">
+        <p>Friday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
+    </div>
+    </div>
+<!-- ///////////// -->
+<div class="box">
+    <div class="top-box">
+        <p>Saturday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
+    </div>
+    </div>
+<!-- //////////// -->
+<div class="box">
+    <div class="top-box">
+        <p>Sunday</p>
+        
+    </div>
+    <div class="input-type">
+        
+        <button id="myButton">+</button>
+    </div>
+    </div>
+
 <div id="myPopup" class="popup">
     <div class="popup-content">
         <h1 style="color:rgb(217, 75, 10);">
@@ -62,7 +121,7 @@
           </button>
     </div>
 </div>
-
+</div>
 <script>
     myButton.addEventListener("click", function () {
         myPopup.classList.add("show");
