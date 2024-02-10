@@ -16,13 +16,13 @@
 
         <li ><a href="{{ url_for('logout') }}" class="active" >logout</a></li>
         
-        <li><a href="#calendar">Calendar</a></li>
-        <li class="right"><a href="#about">About</a></li>
+        <li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+        <li class="right"><a href="{{ url_for('about') }}">About</a></li>
     </ul>
+   
+    
     
 <div class="main" >
-
-
 
 <div class="box">
 <div class="top-box">
@@ -42,7 +42,7 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton2">+</button>
     </div>
     </div>
 <!-- ////////// -->
@@ -53,7 +53,7 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton3">+</button>
     </div>
     </div>
 <!-- /////////// -->
@@ -64,7 +64,7 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton4">+</button>
     </div>
     </div>
 <!-- //////////// -->
@@ -75,7 +75,7 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton5">+</button>
     </div>
     </div>
 <!-- ///////////// -->
@@ -86,7 +86,7 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton6">+</button>
     </div>
     </div>
 <!-- //////////// -->
@@ -97,33 +97,108 @@
     </div>
     <div class="input-type">
         
-        <button id="myButton">+</button>
+        <button id="myButton7">+</button>
     </div>
     </div>
+
+    
+
+
 
 <div id="myPopup" class="popup">
     <div class="popup-content">
         <h1 style="color:rgb(217, 75, 10);">
               Select your daily routine:
           </h1>
-          <br>
-          <div class="select">
-            <select>
-              <option value="1">GYM</option>
-              <option value="2">SCHOOL</option>
-              <option value="3">JOB</option>
-              <option value="4">Hatz</option>
-            </select>
-          </div>
-          <br>
+          
         <button id="closePopup">
               Close
           </button>
     </div>
 </div>
+    
 </div>
+
+
+
+
+
+
+
+
+
+
+
 <script>
     myButton.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+
+    myButton2.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+
+    myButton3.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+    myButton4.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+    myButton5.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+    myButton6.addEventListener("click", function () {
+        myPopup.classList.add("show");
+    });
+    closePopup.addEventListener("click", function () {
+        myPopup.classList.remove("show");
+    });
+    window.addEventListener("click", function (event) {
+        if (event.target == myPopup) {
+            myPopup.classList.remove("show");
+        }
+    });
+    myButton7.addEventListener("click", function () {
         myPopup.classList.add("show");
     });
     closePopup.addEventListener("click", function () {

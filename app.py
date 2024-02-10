@@ -55,7 +55,6 @@ def login():
 
 @app.route('/')
 def index():
-    
     if 'user_id' in session and 'usernm' in session:
         user_id = session['user_id']
         username = session['usernm']
@@ -64,12 +63,24 @@ def index():
     
         return redirect(url_for('login'))
     
+    
 @app.route('/logout/')
 def logout():
     
     session.clear()
     flash('You have been logged out.')
     return redirect(url_for('login'))
+
+
+@app.route('/about')
+def about():
+   username = session['usernm']
+   return render_template('about.html', username=username)
+
+@app.route('/calendar/')
+def calendar():
+    username = session['usernm']
+    return render_template('calendar.html', username=username)
 
 if __name__ == '__main__': 
     app.run(debug=False) 
