@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>Hi, {{username}}</h1>
+<img src="/static/a1.png">
 
     <ul class="topnav">
         
@@ -110,10 +111,14 @@
         <h1 style="color:rgb(217, 75, 10);">
               Select your daily routine:
           </h1>
-          
-        <button id="closePopup">
-              Close
-          </button>
+          <form>
+            <p>activities:</p>
+            <input type="text" name="act">
+            <p>time:</p>
+            <input type="time" name="time">
+          </form>
+          <botton type ="submit" value="submit">submit</botton>
+        <button id="closePopup">Close</button>
     </div>
 </div>
     

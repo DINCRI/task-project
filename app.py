@@ -63,7 +63,13 @@ def index():
     
         return redirect(url_for('login'))
     
-    
+
+@app.route('/test', methods=('POST','GET') )
+def test():
+    if request.method == 'POST':
+        return redirect(url_for('/'))
+
+
 @app.route('/logout/')
 def logout():
     
