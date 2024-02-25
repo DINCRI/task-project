@@ -6,49 +6,6 @@
     <title>Task</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            width: 300px;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .popup-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .popup h1 {
-            color: rgb(217, 75, 10);
-        }
-
-        .popup form {
-            margin-top: 20px;
-        }
-
-        .popup button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: rgb(217, 75, 10);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .popup button:hover {
-            background-color: #ff8c00;
-        }
-    </style>
 </head>
 <body>
 <h1>Hi, {{username}}</h1>
@@ -62,50 +19,50 @@
 
 <div class="main">
 
+
 {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
     <div class="box">
         <div class="top-box">
             <p>{{ day }}</p>
         </div>
         <div class="input-type">
+            
             <button id="myButton{{ loop.index }}" onclick="openPopup('popup{{ loop.index }}')">+</button>
         </div>
     </div>
 
+    
     <div id="popup{{ loop.index }}" class="popup">
         <div class="popup-content">
-            <h1>Select your daily routine for {{ day }}:</h1>
+            <h1 style="color:rgb(217, 75, 10);">Select your daily routine for {{ day }}:</h1>
             <form>
                 <p>activities:</p>
-                <select name="activities">
-                    <option value="work">Work</option>
-                    <option value="study">Study</option>
-                    <option value="exercise">Exercise</option>
-                    <option value="relax">Relax</option>
-                </select>
+                <input type="text" name="act">
                 <p>time:</p>
                 <input type="time" name="time">
             </form>
-            <button type="submit" value="submit">Submit</button>
+            <button type="submit" value="submit">submit</button>
             <button onclick="closePopup('popup{{ loop.index }}')">Close</button>
         </div>
     </div>
 {% endfor %}
 
 <script>
+    
     function openPopup(popupId) {
-        document.getElementById(popupId).style.display = "block";
+        document.getElementById(popupId).classList.add("show");
     }
 
     function closePopup(popupId) {
-        document.getElementById(popupId).style.display = "none";
+        document.getElementById(popupId).classList.remove("show");
     }
+
 
     window.addEventListener("click", function (event) {
         var popups = document.getElementsByClassName("popup");
         for (var i = 0; i < popups.length; i++) {
             if (event.target == popups[i]) {
-                popups[i].style.display = "none";
+                popups[i].classList.remove("show");
             }
         }
     });
