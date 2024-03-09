@@ -35,13 +35,15 @@
     <div id="popup{{ loop.index }}" class="popup">
         <div class="popup-content">
             <h1 style="color:rgb(217, 75, 10);">Select your daily routine for {{ day }}:</h1>
-            <form>
+            <form action="{{ url_for ('activities') }}" method ="POST">
                 <p>activities:</p>
-                <input type="text" name="act">
+                <input type="text" name="activities">
                 <p>time:</p>
                 <input type="time" name="time">
+
+                <input id="day" value="{{ day }}" hidden/>
+                <button type="submit" value="submit">submit</button>
             </form>
-            <button type="submit" value="submit">submit</button>
             <button onclick="closePopup('popup{{ loop.index }}')">Close</button>
         </div>
     </div>

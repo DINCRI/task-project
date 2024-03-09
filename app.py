@@ -56,6 +56,7 @@ def login():
 @app.route('/')
 def index():
     if 'user_id' in session and 'usernm' in session:
+        
         user_id = session['user_id']
         username = session['usernm']
         return render_template('index.html', username=username)
@@ -64,10 +65,23 @@ def index():
         return redirect(url_for('login'))
     
 
-@app.route('/test', methods=('POST','GET') )
-def test():
+@app.route('/activities', methods=('POST','GET'))
+def activities():
     if request.method == 'POST':
-        return redirect(url_for('/'))
+        act = request.form['activites']
+        tm = request.form['time']
+    
+        if not act:
+            flash('required!')
+        elif not tm:
+            flash('required')
+        else:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO PROGRAM (activities, time) VALUES (?,?)', [act,tm])
+            conn.commit()
+            conn.close
+            return redirect(url_for('index'))
+    return render_template('activities.index')
 
 
 @app.route('/logout/')
