@@ -65,7 +65,7 @@ def index():
         return redirect(url_for('login'))
     
 
-@app.route('/activities', methods=('POST','GET'))
+
 def activities():
     if request.method == 'POST':
         act = request.form['activites']
@@ -80,8 +80,7 @@ def activities():
             conn.execute('INSERT INTO PROGRAM (activities, time) VALUES (?,?)', [act,tm])
             conn.commit()
             conn.close
-            return redirect(url_for('index'))
-    return render_template('activities.index')
+            
 
 
 @app.route('/logout/')
