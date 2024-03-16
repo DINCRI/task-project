@@ -53,34 +53,47 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/')
 def index():
     if 'user_id' in session and 'usernm' in session:
-        
         user_id = session['user_id']
         username = session['usernm']
-        return render_template('index.html', username=username)
+
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM PROGRAM WHERE user_id = ?', (user_id,))
+        user_programs = cursor.fetchall()
+        conn.close()
+
+        return render_template('index.html', username=username, user_programs=user_programs)
     else:
-    
         return redirect(url_for('login'))
     
 
 @app.route('/activities', methods=('POST','GET'))
 def activities():
     if request.method == 'POST':
-        act = request.form['activites']
+        act = request.form['activities']
         tm = request.form['time']
+        day = request.form['day']
+        
+        user_id =session.get('user_id')
+
     
         if not act:
             flash('required!')
         elif not tm:
             flash('required')
         else:
+
             conn = get_db_connection()
-            conn.execute('INSERT INTO PROGRAM (activities, time) VALUES (?,?)', [act,tm])
+            conn.execute('INSERT INTO PROGRAM (activities, time, day, user_id) VALUES (?,?,?,?)', [act,tm,day,user_id])
             conn.commit()
             conn.close
-            return redirect(url_for('logout'))
+            return redirect(url_for('index'))
+        
     return render_template('activities.index')
 
 
