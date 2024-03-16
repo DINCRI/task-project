@@ -1,46 +1,43 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Login</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main2.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <!-- Link către biblioteca DaisyUI (doar pentru navbar) -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css">
+  
+  <!-- Link către stilurile tale personalizate -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main2.css') }}">
+  
+  
+ 
 </head>
-{% block content %}
 <body>
-    <div class="wrap">
-        <form class="login-form" action = "{{ url_for('login') }}" method = "POST">
-            <div class="form-header">
-                <h3>Login Form</h3>
-                <p>Login to access the page</p>
-            </div>
-            <!--Username Input-->
-            <div class="form-group">
-                <input type="name" name="usernm" class="form-input" placeholder="Enter your username"  required value="{{ request.form['usernm'] }}">
-            </div>
-            <!--Password Input-->
-            <div class="form-group">
-                <input type="password" name="password" class="form-input" placeholder="Enter your password"  required value="{{ request.form['password'] }}">
-            </div>
-            <!--Login Button-->
-            <div class="form-group">
-                <button class="form-button" type="submit" value="submit">Login</button>
-            </div>
-            <div class="form-footer">
-            Don't have an account? <a href="{{ url_for('register') }}">Sign Up</a>
-            </div>
-        </form>
-        {% with messages = get_flashed_messages()%}
-        {% if massages%}
-            {% for massage in massages%}
-            <p>{{massage}}</p>
-            {%endfor%}
-            {%endif%}
-            {%endwith%}
-    </div><!--/.wrap-->
+
+<!-- Navbar folosind stilurile DaisyUI -->
+<div class="navbar bg-base-100">
+    <a class="btn btn-ghost text-xl">Task-Project</a>
+</div>
+
+<div class="container">
+    <div class="login form">
+      <header>Login</header>
+      <form action="{{ url_for('login') }}" method="POST"> 
+        <input name="usernm" type="text" placeholder="Enter your username" required> 
+        <input type="password" name="password" placeholder="Enter your password" required> 
+        <a href="#">Forgot password?</a>
+        <input type="submit" class="button" value="submit">      
+      <div class="signup">
+        <span class="signup">Don't have an account?
+            <a href="{{ url_for('register') }}">Sign Up</a>
+        </span>
+      </div>
+    </div>
+</div>
+
+
+
 </body>
-{% endblock %}
 </html>

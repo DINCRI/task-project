@@ -96,6 +96,20 @@ def activities():
         
     return render_template('activities.index')
 
+@app.route('/delete_activity', methods=['POST'])
+def delete_activity():
+    if request.method == 'POST':
+        activity_id = request.form['activity_id']
+        
+        conn = get_db_connection()
+        conn.execute('DELETE FROM PROGRAM WHERE id = ?', (activity_id,))
+        conn.commit()
+        conn.close()
+        
+        flash('Activity removed successfully!')
+        return redirect(url_for('index'))
+
+
 
 @app.route('/logout/')
 def logout():
