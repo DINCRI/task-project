@@ -34,6 +34,20 @@
             grid-gap: 40px;
             padding: 25px;
         }
+        body {
+      display: flex;
+      flex-direction: column;
+    min-height: 100vh; /* Make sure body takes up at least the height of the viewport */
+  }
+
+.grid-container {
+    flex: 1; /* Allow the grid container to grow and take up remaining space */
+}
+
+.footer {
+    margin-top: auto; /* Push the footer to the bottom of the page */
+}
+
     </style>
 </head>
 <body class="w-full h-full">
