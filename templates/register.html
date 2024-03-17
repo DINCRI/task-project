@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Login & Registration Form</title>
+ 
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css">
+  
+  
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main2.css') }}">
+  
+  
+ 
 </head>
+
+
+
+<div class="navbar bg-base-100">
+    <a class="btn btn-ghost text-xl">Task-Project</a>
+</div>
+
 <body>
   <div class="container">
     <div class="login form">
-      <header>Register</header>
+      <header>Sign Up</header>
       <form action="{{ url_for('register') }}" method="POST"> 
         <input name="usernm" type="text" placeholder="Enter your username" required> 
-        <input type="text" name="password" placeholder="Enter your password" required> 
+        <input type="password" name="password" placeholder="Enter your password" required> 
         
         <input type="submit" class="button" value="Submit">
       </form> 
