@@ -118,11 +118,24 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('login'))
 
+@app.route('/change_username', methods=['POST'])
+def change_username():
+     if request.method == 'POST':
+        newuser = request.form['usernm']
+        user_id = session['user_id']  
 
-@app.route('/about')
-def about():
+        conn = get_db_connection()
+        conn.execute('UPDATE DETAILS SET usernm = ? WHERE id = ?', (newuser, user_id))  
+        conn.commit()
+        conn.close()
+        session['usernm']=newuser
+        flash('Username changed successfully!')
+        return redirect(url_for('profile'))
+
+@app.route('/profile')
+def profile():
    username = session['usernm']
-   return render_template('about.html', username=username)
+   return render_template('profile.html', username=username)
 
 @app.route('/calendar/')
 def calendar():
