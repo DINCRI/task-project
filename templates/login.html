@@ -25,9 +25,26 @@
     <div class="login form">
       <header>Login</header>
       <form action="{{ url_for('login') }}" method="POST"> 
-        <input name="usernm" type="text" placeholder="Enter your username" required> 
+        <label>Username or Email</label>
+        <input name="usernm" type="text" placeholder="Enter your username or email" required> 
+        <label>Password</label>
         <input type="password" name="password" placeholder="Enter your password" required> 
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <div role="alert" class="alert alert-warning">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  <span><li>{{ message }}</li></span>
+                </div>
+                    
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+        
         <a href="#">Forgot password?</a>
+        
         <input type="submit" class="button" value="submit">      
       <div class="signup">
         <span class="signup">Don't have an account?
