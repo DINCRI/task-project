@@ -10,20 +10,21 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
     
 </head>
-<!-- <style>
-    .main {
+<style>
+    /* .main {
         height: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        justify-content: left;
+        align-items: left;
+    } */
     
-</style> -->
+</style>
 <body>
+
     <div class="navbar bg-base-100">
         <a href="{{url_for('index')}}" class="btn btn-ghost text-xl">Task-Project</a>
       </div>
-      
+      <div class="main">
 
 
 
@@ -38,7 +39,7 @@
         <dt class="text-sm font-medium leading-6 text-gray-900">Username</dt>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{username}}<button class="btn" onclick="my_modal_4.showModal()">change username</button></dd>
         
-        <!-- Open the modal using ID.showModal() method -->
+        
 
         <dialog id="my_modal_4" class="modal">
           <div class="modal-box w-11/12 max-w-5xl">
@@ -47,7 +48,7 @@
               <input name="usernm" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
             <div class="modal-action">
               <form method="dialog">
-                <!-- if there is a button, it will close the modal -->
+                
                 <button class="btn">Save</button>
               </form>
               
@@ -71,7 +72,7 @@
     </dl>
   </div>
 </div>
-
+</div>
 </body>
 
 </html>

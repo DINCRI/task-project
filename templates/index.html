@@ -151,47 +151,45 @@
         </div>
       </div>
 
-<div class="grid-container">
+      <div class="grid-container">
     
-{% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
-<div class="card bg-base-100 shadow-xl">
-    <div class="card-body">
-        <h2 class="card-title">{{ day }}</h2>
-        <p>Your day:</p>
-        {% for program in user_programs %}
-            {% if program['day'] == day %}
-                <p>{{ program['activities'] }} - {{ program['time'] }}</p>
-                <form action="{{ url_for('delete_activity') }}" method="post">
-                    <input type="hidden" name="activity_id" value="{{ program['id'] }}">
-                    <button type="submit" class="btn btn-primary">Remove</button>
+        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">{{ day }}</h2>
+                <p>Your day:</p>
+                {% set day_programs = user_programs|selectattr('day', 'equalto', day)|list %}
+                {% for program in day_programs|sort(attribute='time') %}
+                    <p>{{ program['activities'] }} - {{ program['time'] }}</p>
+                    <form action="{{ url_for('delete_activity') }}" method="post">
+                        <input type="hidden" name="activity_id" value="{{ program['id'] }}">
+                        <button type="submit" class="btn btn-primary">Remove</button>
+                    </form>
+                {% endfor %}
+                <div class="card-actions justify-end">
+                    <button class="btn btn-primary" onclick="openPopup('popup{{ loop.index }}')">+</button>
+                </div>
+            </div>
+        </div>
+        <div id="popup{{ loop.index }}" class="popup">
+            <div class="popup-content">
+                <h1 style="color:rgb(217, 75, 10);">Select your daily routine for {{ day }}:</h1>
+                <form action="{{ url_for ('activities') }}" method="POST">
+                    <p>activities:</p>
+                    <input type="text" name="activities">
+                    <p>time:</p>
+                    <input type="time" name="time">
+                    <input id="day" name="day" value="{{ day }}" hidden/>
+                    
+                    
+
+                    <button type="submit" value="submit">submit</button>
                 </form>
-            {% endif %}
+                <button onclick="closePopup('popup{{ loop.index }}')">Close</button>
+            </div>
+        </div>
         {% endfor %}
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary" onclick="openPopup('popup{{ loop.index }}')">+</button>
-            
-        </div>
     </div>
-</div>
-
-
-
-    <div id="popup{{ loop.index }}" class="popup">
-        <div class="popup-content">
-            <h1 style="color:rgb(217, 75, 10);">Select your daily routine for {{ day }}:</h1>
-            <form action="{{ url_for ('activities') }}" method="POST">
-                <p>activities:</p>
-                <input type="text" name="activities">
-                <p>time:</p>
-                <input type="time" name="time">
-                <input id="day" name="day" value="{{ day }}" hidden/>
-                <button type="submit" value="submit">submit</button>
-            </form>
-            <button onclick="closePopup('popup{{ loop.index }}')">Close</button>
-        </div>
-    </div>
-    {% endfor %}
-</div>
 
 
 

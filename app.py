@@ -111,29 +111,28 @@ def index():
         return redirect(url_for('login'))
     
 
-@app.route('/activities', methods=('POST','GET'))
+@app.route('/activities', methods=('POST', 'GET'))
 def activities():
     if request.method == 'POST':
         act = request.form['activities']
         tm = request.form['time']
         day = request.form['day']
         
-        user_id =session.get('user_id')
+        user_id = session.get('user_id')
 
-    
         if not act:
-            flash('required!')
+            flash('Activity is required!')
         elif not tm:
-            flash('required')
+            flash('Time is required!')
         else:
-
             conn = get_db_connection()
-            conn.execute('INSERT INTO PROGRAM (activities, time, day, user_id) VALUES (?,?,?,?)', [act,tm,day,user_id])
+            conn.execute('INSERT INTO PROGRAM (activities, time, day, user_id) VALUES (?,?,?,?)', [act, tm, day, user_id])
             conn.commit()
-            conn.close
+            conn.close()
             return redirect(url_for('index'))
         
-    return render_template('activities.index')
+    return render_template('index.html')  
+
 
 @app.route('/delete_activity', methods=['POST'])
 def delete_activity():
