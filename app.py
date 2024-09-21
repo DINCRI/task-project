@@ -3,7 +3,12 @@ from flask import Flask, render_template, request, url_for, flash, redirect ,ses
 import re
 import nltk
 from nltk.chat.util import Chat, reflections
+from langchain_community.llms import Ollama
 
+
+llm = Ollama(
+    model="phi3:mini"
+)  
 
 app = Flask(__name__) 
 app.secret_key = "super secret key"
@@ -111,6 +116,14 @@ def index():
         return render_template('index.html', username=username, user_programs=user_programs)
     else:
         return redirect(url_for('login'))
+
+
+@app.route('/chat', methods=('POST', 'GET'))
+def chat():
+    query = request.form['query']
+    response = llm.invoke(query)
+
+    return response
     
 
 @app.route('/activities', methods=('POST', 'GET'))
@@ -188,66 +201,6 @@ def profile():
     else:
         return redirect(url_for('login'))
     
-#nltk
-
-reflections = {
-    "i am"       : "you are",
-    "i was"      : "you were",
-    "i"          : "you",
-    "i'm"        : "you are",
-    "i'd"        : "you would",
-    "i've"       : "you have",
-    "i'll"       : "you will",
-    "my"         : "your",
-    "you are"    : "I am",
-    "you were"   : "I was",
-    "you've"     : "I have",
-    "you'll"     : "I will",
-    "your"       : "my",
-    "yours"      : "mine",
-    "you"        : "me",
-    "me"         : "you"
-}
-
-pairs = [
-    [
-        r"my name is (.*)",
-        ["Hello %1, How are you today ?", "Nice to meet you %1!"]
-    ],
-    [
-        r"how are you ?",
-        ["I'm just an AI assistant, but thank you for asking.", "I'm here to help. How can I assist you?"]
-    ],
-    [
-        r"what do you do ?",
-        ["I'm a chatbot designed to answer your questions and assist you.", "Feel free to ask me anything!"]
-    ],
-    [
-        r"i'm (.*)",
-        ["Hi %1, How are you feeling today ?", "Nice to meet you %1!"]
-    ],
-    [
-        r"quit",
-        ["Bye Bye!! Take Care.", "See you later, have a nice day."]
-    ],
-    [
-        r"thanks?",
-        ["You are welcome.", "Anytime!"]
-    ]
-]
-
-def chat():
-    print("Chatbot: Hi there! I'm your friendly chatbot. How can I assist you?")
-    chat = Chat(pairs, reflections)
-    chat.converse()
-
-chat = Chat(pairs, reflections)
-
-@app.route('/chatbot', methods=['POST'])
-def chatbot():
-    user_input = request.form['user_message']
-    response = chat.respond(user_input)
-    return response
 
 if __name__ == '__main__': 
     app.run(debug=False) 
