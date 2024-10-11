@@ -6,9 +6,7 @@ from nltk.chat.util import Chat, reflections
 from langchain_community.llms import Ollama
 
 
-llm = Ollama(
-    model="phi3:mini"
-)  
+
 
 app = Flask(__name__) 
 app.secret_key = "super secret key"
@@ -118,12 +116,15 @@ def index():
         return redirect(url_for('login'))
 
 
-@app.route('/chat', methods=('POST', 'GET'))
-def chat():
-    query = request.form['query']
-    response = llm.invoke(query)
-
-    return response
+llm = Ollama(
+    model="phi3:mini"
+)  
+@app.route('/chat', methods=('POST', 'GET')) 
+def chat(): 
+    query = request.form['query'] 
+    response = llm.invoke(query) 
+ 
+    return response 
     
 
 @app.route('/activities', methods=('POST', 'GET'))
