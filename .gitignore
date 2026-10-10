@@ -1,0 +1,13 @@
+.env
+__pycache__/
+.local-python/
+venv/
+node_modules/
+flask-*.log
+database.db
+*.db-journal
+*.db-wal
+*.db-shm
+.venv/
+planner-desktop.png
+planner-mobile.png

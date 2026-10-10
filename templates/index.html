@@ -1,190 +1,25 @@
 <!DOCTYPE html>
-<html data-theme="emerald">
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Task</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff; 
-            color: #000; 
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            width: 80%; 
-            max-width: 400px; 
-        }
-        .popup-content {
-            text-align: center;
-        }
-        .popup h1 {
-            color: #d94b0a; 
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        .popup p {
-            margin-bottom: 10px;
-        }
-        .popup button[type="submit"],
-        .popup button[type="button"] {
-            width: calc(100% - 40px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none; 
-            background-color: #f3f4f6;
-            color: #ffffff; 
-        }
-        .popup input[type="text"],
-        .popup input[type="time"]{
-            width: calc(100% - 40px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none; 
-            background-color: #f3f4f6;
-            color: #000000; 
-        }
-        .popup button {
-            cursor: pointer;
-            background-color: #d94b0a; 
-            color: #fff; 
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        .popup button:hover {
-            background-color: #b74109; 
-        }
-        .popup button[type="button"] {
-            background-color: #007bff; 
-        }
-        .popup button[type="button"]:hover {
-            background-color: #0056b3; 
-        }
-        .popup button[type="submit"] {
-            background-color: #65cb89; 
-        }
-        .popup button[type="submit"]:hover {
-            background-color: #65cb89; 
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            grid-gap: 40px;
-            padding: 25px;
-        }
-        body {
-      display: flex;
-      flex-direction: column;
-    min-height: 100vh; 
-  }
-.grid-container {
-    flex: 1; 
-}
-.footer {
-    margin-top: auto; 
-}
-    </style>
-</head>
-<body class="w-full h-full">
-
-    <div class="navbar bg-base-100">
-        <div class="flex-1">
-          <a class="btn btn-ghost text-xl">Task-Project</a>
-          <label class="swap swap-rotate">
-            <input type="checkbox" class="theme-controller" value="dim" />
-            <svg class="swap-off fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
-            <svg class="swap-on fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>
-          </label>
-        </div>
-        <div class="flex-none gap-2">
-          <div class="form-control">
-           <p>{{username}}</p>
-          </div>
-          <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg" />
-              </div>
-            </div>
-            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li>
-                <a href="{{url_for('profile')}}" class="justify-between">Profile</a>
-              </li>
-
-              <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-container">
-    
-        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
-        <div class="card bg-base-100 shadow-xl">
-            <div class="card-body">
-                <h2 class="card-title">{{ day }}</h2>
-                <p>Your day:</p>
-                {% set day_programs = user_programs|selectattr('day', 'equalto', day)|list %}
-                {% for program in day_programs|sort(attribute='time') %}
-                    <p>{{ program['activities'] }} - {{ program['time'] }}</p>
-                    <form action="{{ url_for('delete_activity') }}" method="post">
-                        <input type="hidden" name="activity_id" value="{{ program['id'] }}">
-                        <button type="submit" class="btn btn-primary">Remove</button>
-                    </form>
-                {% endfor %}
-                <div class="card-actions justify-end">
-                    <button class="btn btn-primary" onclick="openPopup('popup{{ loop.index }}')">+</button>
-                </div>
-            </div>
-        </div>
-        <div id="popup{{ loop.index }}" class="popup">
-            <div class="popup-content">
-                <h1 style="color:rgb(0, 0, 0);">Select your daily routine for {{ day }}:</h1>
-                <form action="{{ url_for ('activities') }}" method="POST">
-                    <p>activities:</p>
-                    <input type="text" name="activities">
-                    <p>time:</p>
-                    <input type="time" name="time">
-                    <input id="day" name="day" value="{{ day }}" hidden/>
-                    
-                    
-
-                    <button type="submit" value="submit">submit</button>
-                </form>
-                <button onclick="closePopup('popup{{ loop.index }}')">Close</button>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    
-<script>
-    function openPopup(popupId) {
-        document.getElementById(popupId).style.display = "block";
-    }
-
-    function closePopup(popupId) {
-        document.getElementById(popupId).style.display = "none";
-    }
-</script>
-
-</body>
-</html>
+<html lang="ro">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Săptămâna mea · Task-Project</title><link rel="stylesheet" href="{{ url_for('static', filename='styles/planner.css') }}"><script defer src="{{ url_for('static', filename='planner.js') }}"></script><script defer src="{{ url_for('static', filename='chat.js') }}"></script></head>
+<body>
+<header class="topbar"><a class="brand" href="{{ url_for('index') }}">Task-Project</a><nav><a class="active" href="{{ url_for('index') }}">Planul meu</a><a href="#ideas">Inspirație</a></nav><span class="local-label">⌂ Spațiul meu local</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">MAI MULT TIMP PENTRU CE CONTEAZĂ</p><h1>O săptămână pe placul tău.</h1><p>Fă loc pentru obiective, experiențe noi și puțină pauză.</p></div><button class="primary" type="button" data-add>＋ Adaugă activitate</button></section>
+{% for message in get_flashed_messages() %}<p class="notice" role="alert">{{ message }}</p>{% endfor %}
+<section class="summary"><div><span class="eyebrow">PLANIFICATE</span><strong>{{ total }} <small>activități</small></strong></div><div><span class="eyebrow">ÎNCHEIATE</span><strong>{{ done }} <small>din {{ total }}</small></strong></div><div class="progress-panel"><div><span class="eyebrow">PROGRESUL SĂPTĂMÂNII</span><strong>{{ progress }}%</strong></div><progress value="{{ progress }}" max="100" aria-label="Progresul săptămânii">{{ progress }}%</progress></div></section>
+<section class="planner"><div class="section-heading"><div><h2>Planul săptămânii</h2><p>{{ week_label }}</p></div><div class="week-nav"><a href="{{ url_for('index', week=previous, interest=interest) }}" aria-label="Săptămâna precedentă">←</a><a href="{{ url_for('index') }}">Săptămâna curentă</a><a href="{{ url_for('index', week=following, interest=interest) }}" aria-label="Săptămâna următoare">→</a></div></div>
+<div class="week-grid">
+{% for day, label, day_date in days %}
+{% set items = user_programs|selectattr('day','equalto',day)|list %}
+<article class="day {% if day_date == today %}today{% endif %}"><div class="day-heading"><div><h3>{{ label }}</h3><span>{{ day_date.strftime('%d.%m') }}{% if day_date == today %} · Azi{% endif %}</span></div><span class="count">{{ items|length }}</span></div>
+<div class="day-items">{% for item in items %}<div class="activity {% if item.completed %}completed{% endif %}"><span class="tag" data-category="{{ item.category }}">{{ kinds[item.kind] if item.kind != 'activity' else category_labels.get(item.category, item.category) }}</span>{% if item.recurring %}<span class="repeat-badge">↻ În fiecare săptămână</span>{% endif %}<h4><span class="activity-emoji">{{ item.emoji }}</span> {{ item.activities }}</h4>{% if item.subject %}<p class="subject">{{ item.subject }}</p>{% endif %}{% if item.notes %}<p class="activity-notes">{{ item.notes }}</p>{% endif %}<p class="time">{% if item.kind in ['homework', 'project'] %}Predare · {% endif %}{{ item.time }}{% if item.kind == 'school' %}–{{ item.end_time }}{% else %} <span>· {{ item.duration }} min</span>{% endif %}</p><div class="activity-actions"><form method="post" action="{{ url_for('complete_activity') }}"><input type="hidden" name="activity_id" value="{{ item.id }}"><input type="hidden" name="week" value="{{ week }}"><button class="check" aria-label="{% if item.completed %}Marchează neterminată{% else %}Marchează terminată{% endif %}: {{ item.activities }}">{% if item.completed %}✓ Gata{% else %}○ Bifează{% endif %}</button></form><form method="post" action="{{ url_for('delete_activity') }}"><input type="hidden" name="activity_id" value="{{ item.id }}"><input type="hidden" name="week" value="{{ week }}"><button class="delete" aria-label="{% if item.recurring %}Șterge activitatea permanentă{% else %}Șterge{% endif %}: {{ item.activities }}" title="{% if item.recurring %}Șterge din toate săptămânile{% else %}Șterge activitatea{% endif %}">×</button></form></div></div>{% else %}<div class="empty"><span>☀</span><p>Loc pentru ceva frumos.</p></div>{% endfor %}</div>
+<button class="add-day" type="button" data-add data-day="{{ day }}">＋ Adaugă</button></article>
+{% endfor %}</div></section>
+<section id="ideas" class="ideas"><div class="section-heading"><div><p class="eyebrow">UN PIC DE INSPIRAȚIE</p><h2>Încearcă ceva pentru tine</h2><p>Alege o idee și găsește-i un loc în săptămâna ta.</p></div></div><div class="filters"><a class="{% if not interest %}selected{% endif %}" href="{{ url_for('index',week=week) }}#ideas">Toate</a>{% for category in categories %}<a class="{% if interest == category %}selected{% endif %}" href="{{ url_for('index',week=week,interest=category) }}#ideas">{{ category_labels[category] }}</a>{% endfor %}</div><div class="idea-grid">{% for category, title, duration in suggestions %}<article class="idea"><span class="tag" data-category="{{ category }}">{{ category_labels[category] }}</span><h3>{{ title }}</h3><p>{{ duration }} minute pentru tine</p><button type="button" data-add data-title="{{ title }}" data-category="{{ category }}" data-duration="{{ duration }}">Pune în plan ↗</button></article>{% endfor %}</div></section>
+<footer>Pași mici. O săptămână mai bună.</footer>
+</main><aside aria-label="Conversație cu asistentul" class="chat-panel" id="ai-chat" data-token="{{ chat_token }}" data-week="{{ week }}"><div class="chat-heading"><span class="chat-avatar">✨</span><div><h2>Asistentul tău</h2><p>Hai să vorbim despre planul tău</p></div><button type="button" id="close-chat" aria-label="Închide chatul">×</button></div><div class="chat-context"><span>📅 {{ week_label }}</span><button type="button" id="clear-chat">Conversație nouă</button></div>{% if not chat_ready %}<p class="notice">Configurează cheia API pentru a începe conversația.</p>{% endif %}<div id="chat-messages" role="log" aria-live="polite"><p class="chat-bubble assistant">Salut! Te pot ajuta să-ți faci un plan de învățare, să pregătești un test sau să găsești timp pentru proiecte. Propunerile mele nu modifică automat programul.</p></div><div class="chat-prompts"><button type="button" data-chat-prompt="Ajută-mă să-mi organizez săptămâna.">📅 Planul săptămânii</button><button type="button" data-chat-prompt="Cum mă pregătesc pentru testele din program?">📝 Pregătire pentru teste</button><button type="button" data-chat-prompt="Când am timp să lucrez la proiecte și teme?">💻 Timp pentru proiecte</button></div><form id="chat-form"><label for="chat-input">Mesajul tău</label><div><textarea id="chat-input" maxlength="2000" rows="2" required placeholder="De exemplu: am test joi, cum mă pregătesc?"></textarea><button class="primary" id="send-chat">Trimite ↗</button></div></form><p id="chat-status" role="status"></p><p class="chat-privacy">Mesajele și programul săptămânii sunt trimise la OpenAI. Asistentul propune planuri; nu le modifică automat.</p></aside><button type="button" id="open-chat" aria-controls="ai-chat" aria-expanded="false">💬 Vorbește cu asistentul</button>
+<dialog id="activity-dialog"><form action="{{ url_for('activities') }}" method="post" id="activity-form"><div class="dialog-heading"><div><p class="eyebrow">FĂ-I LOC ÎN PROGRAM</p><h2>O nouă activitate</h2></div><button type="button" id="close-dialog" aria-label="Închide">×</button></div><input type="hidden" name="week" value="{{ week }}">
+<fieldset class="kind-picker"><legend>Ce adaugi în program?</legend><div>{% for key, label in kinds.items() %}<button type="button" data-kind="{{ key }}" aria-pressed="{{ 'true' if key == 'activity' else 'false' }}">{{ label }}</button>{% endfor %}</div><input type="hidden" name="kind" value="activity"></fieldset><p id="kind-help">Alege o activitate din listă sau scrie una proprie.</p><section class="activity-picker" aria-label="Idei de activități"><p class="picker-intro">Alege o idee sau inventează ceva pe placul tău.</p><label>Caută în lista de activități<input id="catalog-search" type="search" placeholder="Caută: sport, citit, muzică…"></label><div id="catalog-filters" class="filters"><button type="button" class="selected" data-filter="">Toate</button>{% for category in categories %}<button type="button" data-filter="{{ category }}">{{ category_labels[category] }}</button>{% endfor %}</div><div id="activity-catalog" class="catalog"></div><p id="catalog-empty" hidden>Nu am găsit o idee. Scrie activitatea ta mai jos.</p><button type="button" id="custom-activity" class="custom-activity">✏️ Scriu propria activitate</button></section>
+<div class="chosen-preview" aria-live="polite"><span id="preview-emoji">✨</span><div><small>ACTIVITATEA TA</small><strong id="preview-title">Ce vrei să faci?</strong></div></div>
+<label>Ce vrei să faci?<input name="activities" maxlength="160" required placeholder="De exemplu: lucrez la proiectul meu"></label><section id="school-details" hidden><label>Materia<input name="subject" maxlength="80" placeholder="De exemplu: Matematică"></label><label id="event-date-label">Data<input type="date" name="event_date"></label><label>Detalii (opțional)<textarea name="notes" maxlength="1000" rows="2" placeholder="Capitole pentru test, cerințe sau ce ai de pregătit"></textarea></label></section><fieldset class="emoji-picker"><legend>Alege un emoji</legend><input type="hidden" name="emoji" value="✨"><div>{% for emoji in emojis %}<button type="button" data-emoji="{{ emoji }}" aria-label="Emoji {{ emoji }}" aria-pressed="{{ 'true' if emoji == '✨' else 'false' }}">{{ emoji }}</button>{% endfor %}</div></fieldset><div class="form-row"><label>Ziua<select name="day">{% for day, label, day_date in days %}<option value="{{ day }}">{{ label }} · {{ day_date.strftime('%d.%m') }}</option>{% endfor %}</select></label><label><span id="time-label">Ora</span><input type="time" name="time" value="18:00" required></label></div><div class="form-row"><label>Ce fel de activitate este?<select name="category" aria-describedby="category-help">{% for category in categories %}<option value="{{ category }}">{{ category_labels[category] }}</option>{% endfor %}</select><small id="category-help">Cumpărături, curățenie, întâlniri sau alte treburi.</small></label><label id="duration-label">Durată (minute)<input type="number" name="duration" min="5" max="480" value="30" required></label><label id="end-time-label" hidden>Până la ora<input type="time" name="end_time" value="14:00"></label></div><section class="repeat-settings"><label class="repeat-toggle"><input type="checkbox" name="recurring" value="weekly" id="repeat-weekly"><span>↻ Activitate permanentă<small>Se repetă săptămânal, începând cu săptămâna aleasă. Ideal pentru orarul de la școală.</small></span></label><fieldset id="repeat-days" hidden><legend>Se repetă și în zilele:</legend><div>{% for day, label, day_date in days %}<label><input type="checkbox" name="repeat_days" value="{{ day }}">{{ label }}</label>{% endfor %}</div><p>Ziua aleasă mai sus este inclusă automat. Bifarea „Gata” se păstrează separat pentru fiecare săptămână.</p></fieldset></section><script id="category-help-data" type="application/json">{{ category_help|tojson }}</script><button class="primary save">Adaugă în săptămână</button></form></dialog>
+</body></html>
