@@ -60,7 +60,9 @@ document.querySelector('#custom-activity').addEventListener('click', () => {
  form.elements.activities.focus();
  form.elements.activities.scrollIntoView({block:'center',behavior:'smooth'});
 });
-document.querySelectorAll('[data-add]').forEach(button => button.addEventListener('click', () => {
+document.addEventListener('click', event => {
+ const button = event.target.closest('[data-add]');
+ if (!button) return;
  form.reset(); filter = ''; search.value = '';
  document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('selected', b.dataset.filter === ''));
  form.elements.day.value = button.dataset.day || 'Monday';
@@ -69,7 +71,7 @@ document.querySelectorAll('[data-add]').forEach(button => button.addEventListene
  form.elements.duration.value = button.dataset.duration || '30';
  form.elements.emoji.value = {'Învățare':'💻','Mișcare':'🏃','Hobby':'🎨','Relaxare':'🌿','Personal':'🎯'}[button.dataset.category] || '✨';
  setKind('activity'); updateEventDate(); updatePreview(); renderCatalog(); dialog.showModal(); dialog.scrollTop = 0; search.focus();
-}));
+});
 document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => {
  const bounds = dialog.getBoundingClientRect();

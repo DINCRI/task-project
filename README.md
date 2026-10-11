@@ -29,17 +29,26 @@ Pe macOS / Linux:
 
 3. Deschide http://127.0.0.1:5000 în browser. Nu trebuie să creezi un cont.
 
-Baza de date se creează automat la prima deschidere. Fiecare instalare are propriul program. Aplicația funcționează fără cheie API pentru toate funcțiile de planificare; cheia este necesară numai pentru chat. Pentru a opri aplicația, apasă Ctrl+C în terminal.
+Baza de date se creează automat la prima deschidere. Fiecare instalare are propriul program. Aplicația folosește Ollama pentru chat local, fără cheie API sau costuri pe mesaje. Pentru a opri aplicația, apasă Ctrl+C în terminal.
 
-## Activarea chatului OpenAI
+## Chat local cu Ollama
 
-1. Creează o cheie API în contul OpenAI Platform și configurează creditul/facturarea API.
-2. Copiază `.env.example` într-un fișier `.env` din acest director.
-3. Completează `OPENAI_API_KEY` în `.env`, local. Nu trimite cheia în chat și nu o pune în HTML sau JavaScript.
-4. `OPENAI_MODEL` stabilește modelul folosit. Implicit: `gpt-6-astra`; modelul trebuie să fie disponibil contului tău.
-5. Deschide aplicația și trimite un mesaj. Configurarea din `.env` este citită la fiecare cerere, deci schimbarea cheii nu cere repornire.
+Instalează Ollama de la https://ollama.com sau, pe macOS, cu Homebrew:
 
-Fișierul `.env` este exclus din Git. Variabilele de mediu cu aceleași nume au prioritate.
-Chatul transmite mesajele, ultimele schimburi din conversație și programul utilizatorului pentru săptămâna afișată către OpenAI. Istoricul rămâne doar în pagina deschisă și se pierde la reîncărcare. Chatul propune planuri; nu modifică activitățile. Integrarea folosește Responses API cu `store: false`, fără a promite că aceasta elimină toate formele de păstrare a datelor de către furnizor.
+```sh
+brew install ollama
+brew services start ollama
+ollama pull gemma3:4b
+```
 
-Documentație: https://developers.openai.com/api/docs/quickstart
+Chatul folosește serverul local de pe `127.0.0.1:11434`. Mesajele și programul săptămânii sunt procesate pe computer, fără apeluri către OpenAI. Prima cerere poate dura mai mult pentru încărcarea modelului. Modelul se descarcă o singură dată și ocupă aproximativ 3,4 GB.
+
+Opțional, setează `OLLAMA_MODEL` în `.env` pentru un alt model local instalat. Fișierul `.env` este exclus din Git. Istoricul conversației și activitățile incomplete se păstrează în baza de date locală, inclusiv după repornire. «Conversație nouă» șterge istoricul conversației, fără să șteargă activitățile. Chatul poate pregăti activități din mesaje precum «Mâine am test la matematică la ora 10». Dacă lipsește ziua sau ora, le cere în conversație. Activitățile complete se salvează direct și calendarul se actualizează fără reîncărcare. Intervalele precum «8–9 istorie» devin o singură activitate de 60 de minute. Repetarea aceleiași activități la aceeași dată și oră actualizează intrarea existentă. Datele relative sunt calculate în Europe/Bucharest, independent de săptămâna afișată.
+
+Mesajele cu mai multe zile și intervale sunt interpretate de Ollama într-o structură verificată înainte de salvare. Orarul de școală cu mai multe zile se salvează săptămânal; poți preciza «doar săptămâna asta» pentru intrări temporare. Dacă modelul omite o zi sau asociază greșit intervalele explicite ale școlii, nu se salvează un orar parțial.
+
+### Orar din fotografie
+
+În chat, „📷 Adaugă orarul din poză” importă un JPG/PNG/WebP (max. 8 MB). Fotografia trebuie să conțină zilele, materiile și intervalele orare. Dacă poza are numai numerele orelor, scrie intervalele în mesaj înainte să selectezi poza. Citirea folosește local macOS Vision și Qwen 2.5 7B; Gemma 3 oferă alternativa vizuală dacă OCR nu este disponibil. Qwen trebuie instalat în Ollama (`ollama pull qwen2.5:7b`). Recunoașterea macOS necesită Command Line Tools, cu SDK 15.4 în această instalare.
+
+Un import complet înlocuiește blocurile generice „Școală” și orarul importat anterior, păstrând testele, temele și activitățile personale. Versiunea anterioară este păstrată în SQLite în `TIMETABLE_BACKUPS`. Fotografia nu este păstrată. Orele recurente sunt afișate numai în zilele de curs pentru Alba, clasa a X-a, profil teoretic, anul 2026–2027. Calendarul trebuie actualizat pentru anul următor. Datele locale pentru Școala altfel, Săptămâna verde și eventuale suspendări nu sunt încă disponibile.

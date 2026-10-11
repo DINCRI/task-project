@@ -28,6 +28,9 @@ def install_planner(app, db):
             for name, definition in [('week', "TEXT NOT NULL DEFAULT ''"), ('completed', 'INTEGER NOT NULL DEFAULT 0'), ('category', "TEXT NOT NULL DEFAULT 'Personal'"), ('duration', 'INTEGER NOT NULL DEFAULT 30'), ('emoji', "TEXT NOT NULL DEFAULT '✨'"), ('recurring', 'INTEGER NOT NULL DEFAULT 0'), ('kind', "TEXT NOT NULL DEFAULT 'activity'"), ('subject', "TEXT NOT NULL DEFAULT ''"), ('notes', "TEXT NOT NULL DEFAULT ''")]:
                 if name not in columns:
                     conn.execute(f'ALTER TABLE PROGRAM ADD COLUMN {name} {definition}')
+            profile_columns = {r['name'] for r in conn.execute('PRAGMA table_info(LOCAL_PROFILE)')}
+            if 'selected_week' not in profile_columns:
+                conn.execute('ALTER TABLE LOCAL_PROFILE ADD COLUMN selected_week TEXT')
             conn.execute('CREATE TABLE IF NOT EXISTS WEEK_COMPLETION (activity_id INTEGER NOT NULL, week TEXT NOT NULL, PRIMARY KEY (activity_id, week))')
             conn.execute("UPDATE PROGRAM SET week = ? WHERE week = ''", (week_of().isoformat(),))
 
@@ -36,7 +39,15 @@ def install_planner(app, db):
         if 'chat_token' not in session:
             session['chat_token'] = secrets.token_urlsafe(32)
         from chat_ai import settings
-        week = week_of(request.args.get('week'))
+        with db() as conn:
+            saved = conn.execute('SELECT selected_week FROM LOCAL_PROFILE WHERE id=1').fetchone()
+            selected = request.args.get('week') or (saved['selected_week'] if saved else None)
+            if not selected:
+                current = week_of().isoformat()
+                upcoming = conn.execute('SELECT MIN(week) AS week FROM PROGRAM WHERE user_id=? AND week>=?', (session['user_id'], current)).fetchone()
+                selected = upcoming['week'] if upcoming and upcoming['week'] else current
+            week = week_of(selected)
+            conn.execute('UPDATE LOCAL_PROFILE SET selected_week=? WHERE id=1', (week.isoformat(),))
         with db() as conn:
             rows = [dict(r) for r in conn.execute('SELECT * FROM PROGRAM WHERE user_id = ? AND (week = ? OR (recurring = 1 AND week <= ?)) ORDER BY time, id', (session['user_id'], week.isoformat(), week.isoformat())).fetchall()]
             completed = {r['activity_id'] for r in conn.execute('SELECT activity_id FROM WEEK_COMPLETION WHERE week = ?', (week.isoformat(),))}
@@ -45,6 +56,8 @@ def install_planner(app, db):
                 row['end_time'] = f'{end_minutes//60%24:02d}:{end_minutes%60:02d}'
                 if row['recurring']:
                     row['completed'] = int(row['id'] in completed)
+        from school_calendar import visible
+        rows = [r for r in rows if visible(r, week, DAYS)]
         done = sum(r['completed'] for r in rows)
         interest = request.args.get('interest', '')
         return render_template('index.html', username=session.get('usernm', ''), chat_ready=bool(settings()[0]), chat_token=session['chat_token'], user_programs=rows,

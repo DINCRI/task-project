@@ -4,7 +4,7 @@ from pathlib import Path
 from flask import Flask, session, redirect, url_for
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 64 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 9 * 1024 * 1024
 app.secret_key = secrets.token_hex(32)
 
 def get_db_connection():
